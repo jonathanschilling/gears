@@ -1,5 +1,6 @@
 package de.labathome.gears;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -16,7 +17,7 @@ public class Gears {
 		return findToothcounts(transmissionRatios, MAX_TOOTH_SUM_DEFAULT, MIN_TOOTH_SUM_DEFAULT, null);
 	}
 
-	public static Fraction[] findToothcounts(Fraction[] transmissionRatios, int maxToothSum, int minToothSum, List<int[][]> teethCounts1) {
+	public static Fraction[] findToothcounts(Fraction[] transmissionRatios, int maxToothSum, int minToothSum, List<int[][]> teethCounts) {
 
 		Fraction[] uniqueSolution = null;
 
@@ -27,11 +28,11 @@ public class Gears {
 
 			Fraction[] trialSolution = new Fraction[transmissionRatios.length];
 
-			final int[][] trialTeethCounts1;
-			if (teethCounts1 != null) {
-				trialTeethCounts1 = new int[transmissionRatios.length][2];
+			final int[][] trialTeethCounts;
+			if (teethCounts != null) {
+				trialTeethCounts = new int[transmissionRatios.length][2];
 			} else {
-				trialTeethCounts1 = null;
+				trialTeethCounts = null;
 			}
 
 			for (int idxRatio = 0; idxRatio < transmissionRatios.length && allMatch; ++idxRatio) {
@@ -48,9 +49,9 @@ public class Gears {
 						foundOne = true;
 						trialSolution[idxRatio] = currentRatio;
 
-						if (trialTeethCounts1 != null) {
-							trialTeethCounts1[idxRatio][0] = teeth1;
-							trialTeethCounts1[idxRatio][1] = teeth2;
+						if (trialTeethCounts != null) {
+							trialTeethCounts[idxRatio][0] = teeth1;
+							trialTeethCounts[idxRatio][1] = teeth2;
 						}
 					}
 				}
@@ -72,23 +73,37 @@ public class Gears {
 				}
 				logger.fine(infoString);
 
-				if (teethCounts1 != null) {
+				if (teethCounts != null) {
 					if (uniqueSolution == null) {
 						uniqueSolution = trialSolution;
 					}
 
-					teethCounts1.add(trialTeethCounts1);
+					teethCounts.add(trialTeethCounts);
 				} else {
 					return trialSolution;
 				}
 			}
 		}
 
-		if (teethCounts1 != null && teethCounts1.size() > 0) {
+		if (teethCounts != null && teethCounts.size() > 0) {
 			return uniqueSolution;
 		} else {
 			logger.warning("No possible combination was found.");
 			return null;
 		}
+	}
+
+	public static GearsOutput findToothcounts(GearsInput input) {
+
+		final List<int[][]> teethCounts;
+		if (input.outputTeethCounts) {
+			teethCounts = new LinkedList<>();
+		} else {
+			teethCounts = null;
+		}
+
+		Fraction[] solution = Gears.findToothcounts(input.transmissionRatios, input.maxToothSum, input.minToothSum, teethCounts);
+
+		return new GearsOutput(solution, teethCounts);
 	}
 }

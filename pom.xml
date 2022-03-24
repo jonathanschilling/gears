@@ -2,49 +2,94 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
 		<groupId>de.labathome</groupId>
 		<artifactId>de-labathome-parent</artifactId>
 		<version>1.0.1</version>
 	</parent>
-	
-	<groupId>de.labathome</groupId>
+
 	<artifactId>gears</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
-	
+
 	<name>gears</name>
 	<description>Gearbox Calculator: find compatible toothcounts for given transmission ratios</description>
-	
+
+	<properties>
+		<app.mainClass>de.labathome.cli.GearsCli</app.mainClass>
+	</properties>
+
 	<url>${jonathanschilling.git.url}${project.name}</url>
-    <scm>
-        <connection>${jonathanschilling.git.root}${project.name}.git</connection>
-        <developerConnection>${jonathanschilling.git.root}${project.name}.git</developerConnection>
-        <url>${jonathanschilling.git.url}${project.name}/tree/master</url>
-    </scm>
-    <issueManagement>
-        <url>${jonathanschilling.git.url}${project.name}/issues</url>
-        <system>GitLab Issues</system>
-    </issueManagement>
+	<scm>
+		<connection>${jonathanschilling.git.root}${project.name}.git</connection>
+		<developerConnection>${jonathanschilling.git.root}${project.name}.git</developerConnection>
+		<url>${jonathanschilling.git.url}${project.name}/tree/master</url>
+	</scm>
+	<issueManagement>
+		<url>${jonathanschilling.git.url}${project.name}/issues</url>
+		<system>GitLab Issues</system>
+	</issueManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-            <version>3.6.1</version>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.9</version>
+		</dependency>
+		<dependency>
+			<groupId>info.picocli</groupId>
+			<artifactId>picocli</artifactId>
+			<version>4.6.2</version>
+		</dependency>
+	</dependencies>
 
-    <build>
-        <resources>
-            <resource>
-                <!-- Include the documentation as a resource: README.md -->
-                <directory>${project.basedir}</directory>
-                <includes>
-                    <include>README.md</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<finalName></finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+					<archive>
+						<manifest>
+							<mainClass>${app.mainClass}</mainClass>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Build-Revision>${buildNumber}</Build-Revision>
+							<Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
+						</manifestEntries>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<!-- Include the documentation as a resource: README.md -->
+				<directory>${project.basedir}</directory>
+				<includes>
+					<include>README.md</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
 </project>

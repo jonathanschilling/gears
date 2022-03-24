@@ -1,0 +1,6 @@
+{
+  "transmissionRatios" : [ [ 2, 1 ], [ 1, 1 ], [ 2, 5 ] ],
+  "maxToothSum" : 200,
+  "minToothSum" : 10,
+  "outputTeethCounts" : true
+}
