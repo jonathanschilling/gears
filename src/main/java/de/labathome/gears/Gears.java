@@ -1,8 +1,6 @@
 package de.labathome.gears;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.math3.fraction.Fraction;
@@ -18,15 +16,7 @@ public class Gears {
 		return findToothcounts(transmissionRatios, MAX_TOOTH_SUM_DEFAULT, MIN_TOOTH_SUM_DEFAULT, null);
 	}
 
-	public static Fraction[] findToothcounts(Fraction[] transmissionRatios, int maxToothSum) {
-		return findToothcounts(transmissionRatios, maxToothSum, MIN_TOOTH_SUM_DEFAULT, null);
-	}
-
-	public static Fraction[] findToothcounts(Fraction[] transmissionRatios, int maxToothSum, int minToothSum) {
-		return findToothcounts(transmissionRatios, maxToothSum, minToothSum, null);
-	}
-
-	public static Fraction[] findToothcounts(Fraction[] transmissionRatios, int maxToothSum, int minToothSum, List<int[]> teethCounts1) {
+	public static Fraction[] findToothcounts(Fraction[] transmissionRatios, int maxToothSum, int minToothSum, List<int[][]> teethCounts1) {
 
 		Fraction[] uniqueSolution = null;
 
@@ -37,9 +27,9 @@ public class Gears {
 
 			Fraction[] trialSolution = new Fraction[transmissionRatios.length];
 
-			final int[] trialTeethCounts1;
+			final int[][] trialTeethCounts1;
 			if (teethCounts1 != null) {
-				trialTeethCounts1 = new int[transmissionRatios.length];
+				trialTeethCounts1 = new int[transmissionRatios.length][2];
 			} else {
 				trialTeethCounts1 = null;
 			}
@@ -59,7 +49,8 @@ public class Gears {
 						trialSolution[idxRatio] = currentRatio;
 
 						if (trialTeethCounts1 != null) {
-							trialTeethCounts1[idxRatio] = teeth1;
+							trialTeethCounts1[idxRatio][0] = teeth1;
+							trialTeethCounts1[idxRatio][1] = teeth2;
 						}
 					}
 				}
@@ -96,77 +87,8 @@ public class Gears {
 		if (teethCounts1 != null && teethCounts1.size() > 0) {
 			return uniqueSolution;
 		} else {
-			logger.warning("No possible combination found.");
+			logger.warning("No possible combination was found.");
 			return null;
 		}
 	}
-
-	public static void main(String[] args) {
-		Logger.getGlobal().setLevel(Level.WARNING);
-
-		int minToothSum = MIN_TOOTH_SUM_DEFAULT;
-		int maxToothSum = MAX_TOOTH_SUM_DEFAULT;
-
-//		// Stufe 1
-//		Fraction[] transmissionRatios = {
-//				new Fraction(1, 2),
-//				new Fraction(1, 1),
-//				new Fraction(5, 2)
-//		};
-
-//		// Stufe 2a
-//		Fraction[] transmissionRatios = {
-//				new Fraction(10, 10),
-//				new Fraction(12, 10),
-//				new Fraction(14, 10)
-//		};
-
-//		//	Stufe 2b
-//		Fraction[] transmissionRatios = {
-////			new Fraction(16, 10),
-//				new Fraction(18, 10),
-//				new Fraction(20, 10)
-//		};
-
-		// links
-		Fraction[] transmissionRatios = {
-			new Fraction(10, 14),
-			new Fraction(14, 14),
-			new Fraction(18, 14)
-		};
-
-//		// rechts
-//		Fraction[] transmissionRatios = {
-//			new Fraction(12, 12),
-//			new Fraction(16, 12),
-//			new Fraction(20, 12)
-//		};
-
-		List<int[]> teethCounts1 = new LinkedList<>();
-		Fraction[] result = Gears.findToothcounts(transmissionRatios, maxToothSum, minToothSum, teethCounts1);
-
-		if (result != null) {
-			System.out.println("found a unique solution:");
-			for (int idxRatio = 0; idxRatio < result.length; ++idxRatio) {
-				System.out.printf("  ratio %d: %d:%d\n", idxRatio + 1,
-						result[idxRatio].getNumerator(),
-						result[idxRatio].getDenominator());
-			}
-
-			System.out.println("possible combinations for given tooth sum range:");
-			for (int[] teethCount1: teethCounts1) {
-				int[] teethCount2 = new int[teethCount1.length];
-				for (int idxRatio = 0; idxRatio < teethCount1.length; ++idxRatio) {
-					int scale = teethCount1[idxRatio] / result[idxRatio].getNumerator();
-					teethCount2[idxRatio] = scale * result[idxRatio].getDenominator();
-				}
-
-				System.out.printf("tooth sum %d\n", teethCount1[0] + teethCount2[0]);
-				for (int idxRatio = 0; idxRatio < teethCount1.length; ++idxRatio) {
-					System.out.printf("  ratio %d: %d:%d\n", idxRatio, teethCount1[idxRatio], teethCount2[idxRatio]);
-				}
-			}
-		}
-	}
-
 }
