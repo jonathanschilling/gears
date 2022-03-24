@@ -17,10 +17,12 @@ public class GearsOutput {
 	public String toJson() {
 
 		String json = "{";
-		json += solutionToJson();
-		if (teethCounts != null) {
-			json += ",";
-			json += teethCountsToJson();
+		if (solution != null) {
+			json += solutionToJson();
+			if (teethCounts != null) {
+				json += ",";
+				json += teethCountsToJson();
+			}
 		}
 		json += "}";
 
