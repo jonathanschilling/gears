@@ -21,8 +21,6 @@ it is accepted as a valid realization of this transmission ratio.
 If realizations can be found for the whole set of requested transmission ratios
 for a given `toothSum`, this is accepted as a valid solution.
 
-The binary can be downloaded directly from this repository: [gears-1.0.0.jar](https://github.com/jonathanschilling/gears/releases/download/v1.0.0/gears-1.0.0.jar)
-
 ## Usage
 
 This program is a commandline utility.
@@ -74,6 +72,10 @@ The output file contents are as follows (for above example):
 A unique solution was found. It matches the requested `transmissionRatios` specified in the input.
 Concrete realizations are listed, because `outputTeethCounts` was set to `true` in the input.
 Two realizations are found, with teeth sums of 42 and 84.
+
+## Download and Maven
+
+The binary can be downloaded directly from this repository: [gears-1.0.0.jar](https://github.com/jonathanschilling/gears/releases/download/v1.0.0/gears-1.0.0.jar)
 
 This program is also available on Maven Central for usage in other programs:
 
