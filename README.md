@@ -83,6 +83,6 @@ This program is also available on Maven Central for usage in other programs:
 <dependency>
   <groupId>de.labathome</groupId>
   <artifactId>gears</artifactId>
-	<version>1.0.0</version>
+  <version>1.0.0</version>
 </dependency>
 ```
