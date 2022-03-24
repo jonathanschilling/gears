@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>de.labathome</groupId>
+		<artifactId>de-labathome-parent</artifactId>
+		<version>1.0.1</version>
+	</parent>
+	
+	<groupId>de.labathome</groupId>
+	<artifactId>gears</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+	
+	<name>gears</name>
+	<description>Gearbox Calculator: find compatible toothcounts for given transmission ratios</description>
+	
+	<url>${jonathanschilling.git.url}${project.name}</url>
+    <scm>
+        <connection>${jonathanschilling.git.root}${project.name}.git</connection>
+        <developerConnection>${jonathanschilling.git.root}${project.name}.git</developerConnection>
+        <url>${jonathanschilling.git.url}${project.name}/tree/master</url>
+    </scm>
+    <issueManagement>
+        <url>${jonathanschilling.git.url}${project.name}/issues</url>
+        <system>GitLab Issues</system>
+    </issueManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <!-- Include the documentation as a resource: README.md -->
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>README.md</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+</project>
