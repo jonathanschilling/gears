@@ -20,6 +20,8 @@ If the ratio `toothCount1/toothCount2` is compatible with the requested transmis
 it is accepted as a valid realization of this transmission ratio.
 If realizations can be found for the whole set of requested transmission ratios
 for a given `toothSum`, this is accepted as a valid solution.
+This algorithm is the core functionality of this program.
+It is implemented in [`Gears.java`](https://github.com/jonathanschilling/gears/blob/master/src/main/java/de/labathome/gears/Gears.java).
 
 ## Usage
 
