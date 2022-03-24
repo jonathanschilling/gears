@@ -39,7 +39,7 @@ public class Gears {
 
 				boolean foundOne = false;
 
-				for (int teeth1 = 1; teeth1 < toothSum - 1 && !foundOne; ++teeth1) {
+				for (int teeth1 = minToothSum-1; teeth1 < toothSum && !foundOne; ++teeth1) {
 					int teeth2 = toothSum - teeth1;
 
 					logger.finer(String.format("testing ratio %d:%d", teeth1, teeth2));
