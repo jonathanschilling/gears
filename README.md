@@ -52,6 +52,12 @@ The parameter `outputTeethCounts` is `false` by default.
 It can be set to `true` in order to have the program output
 concrete tooth counts if a solution was found.
 
+The program has to be run with the input file as the first parameter:
+
+```bash
+java -jar gears-1.0.0.jar input.json
+```
+
 A `JSON` output file will be created, where the input filename `/path/to/input.json`
 is used to get the output filename: `/path/to/input_out.json`.
 
