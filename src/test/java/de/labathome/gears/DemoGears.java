@@ -26,29 +26,6 @@ class DemoGears {
 		demoJsonInputCall();
 	}
 
-	static void demoJsonInputCall() {
-
-		String resourceName = "/demoInput.json";
-		InputStream inputStream = DemoGears.class.getResourceAsStream(resourceName);
-		if (inputStream == null) {
-			throw new RuntimeException("Cannot find resource '" + resourceName + "'");
-		}
-
-		try (Reader reader = new InputStreamReader(inputStream, "UTF-8")) {
-			JsonObject inputObj = new Gson().fromJson(reader, JsonObject.class);
-
-			GearsInput input = GearsInput.fromJson(inputObj);
-			GearsOutput output = Gears.findToothcounts(input);
-
-
-			printSolution(output.solution, output.teethCounts);
-			System.out.println(output.toJson());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	static void demoDirectCall() {
 
 		// level 1
@@ -88,17 +65,44 @@ class DemoGears {
 
 		int maxTeethSum = 100;
 		int minTeethSum = 10;
+		Fraction minModule = Gears.NORM_MODULES[10]; // 0.5
+		Fraction maxModule = Gears.NORM_MODULES[18]; // 2.0
 		List<int[][]> teethCounts = new LinkedList<>();
-		Fraction[] solution = Gears.findToothcounts(transmissionRatios, maxTeethSum, minTeethSum, teethCounts);
+		Fraction[][] solution = Gears.findToothcounts(transmissionRatios,
+				minTeethSum, maxTeethSum,
+				minModule, maxModule, teethCounts);
 
-		printSolution(solution, teethCounts);
+		printSolution(solution[0], solution[1], teethCounts);
 	}
 
-	static void printSolution(Fraction[] solution, List<int[][]> teethCounts) {
+	static void demoJsonInputCall() {
+
+		String resourceName = "/demoInput.json";
+		InputStream inputStream = DemoGears.class.getResourceAsStream(resourceName);
+		if (inputStream == null) {
+			throw new RuntimeException("Cannot find resource '" + resourceName + "'");
+		}
+
+		try (Reader reader = new InputStreamReader(inputStream, "UTF-8")) {
+			JsonObject inputObj = new Gson().fromJson(reader, JsonObject.class);
+
+			GearsInput input = GearsInput.fromJson(inputObj);
+			GearsOutput output = Gears.findToothcounts(input);
+
+			printSolution(output.solution, output.modules, output.teethCounts);
+			System.out.println(output.toJson());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	static void printSolution(Fraction[] solution, Fraction[] modules, List<int[][]> teethCounts) {
 		if (solution != null) {
 			System.out.println("found a unique solution:");
 			for (int idxRatio = 0; idxRatio < solution.length; ++idxRatio) {
-				System.out.printf("  ratio %d: %d:%d\n", idxRatio + 1,
+				System.out.printf("  ratio %d (module %.2f): %d:%d\n", idxRatio + 1,
+						modules[idxRatio].doubleValue(),
 						solution[idxRatio].getNumerator(),
 						solution[idxRatio].getDenominator());
 			}

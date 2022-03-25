@@ -11,18 +11,28 @@ public class GearsInput {
 	Fraction[] transmissionRatios;
 	int maxToothSum = Gears.MAX_TOOTH_SUM_DEFAULT;
 	int minToothSum = Gears.MIN_TOOTH_SUM_DEFAULT;
+	Fraction minModule = Gears.MIN_MODULE_DEFAULT;
+	Fraction maxModule = Gears.MAX_MODULE_DEFAULT;
 	boolean outputTeethCounts = false;
 
 	public GearsInput(Fraction[] transmissionRatios) {
 		this.transmissionRatios = transmissionRatios;
 	}
 
+	public void setMinToothSum(int minToothSum) {
+		this.minToothSum = minToothSum;
+	}
+
 	public void setMaxToothSum(int maxToothSum) {
 		this.maxToothSum = maxToothSum;
 	}
 
-	public void setMinToothSum(int minToothSum) {
-		this.minToothSum = minToothSum;
+	public void setMinModule(Fraction minModule) {
+		this.minModule = minModule;
+	}
+
+	public void setMaxModule(Fraction maxModule) {
+		this.maxModule = maxModule;
 	}
 
 	public void setOutputTeethCounts(boolean outputTeethCounts) {
@@ -53,16 +63,19 @@ public class GearsInput {
 
 		GearsInput input = new GearsInput(transmissionRatios);
 
-		// optional inputs: maxToothSum, minToothSum, outputTeethCounts
+		// optional inputs: minToothSum, maxToothSum, outputTeethCounts
+		JsonElement minToothSumElement = json.get("minToothSum");
+		if (minToothSumElement != null) {
+			input.setMinToothSum(minToothSumElement.getAsInt());
+		}
+
 		JsonElement maxToothSumElement = json.get("maxToothSum");
 		if (maxToothSumElement != null) {
 			input.setMaxToothSum(maxToothSumElement.getAsInt());
 		}
 
-		JsonElement minToothSumElement = json.get("minToothSum");
-		if (minToothSumElement != null) {
-			input.setMinToothSum(minToothSumElement.getAsInt());
-		}
+		// TODO: minModule
+		// TODO: maxModule
 
 		JsonElement outputTeethCountsElement = json.get("outputTeethCounts");
 		if (outputTeethCountsElement != null) {

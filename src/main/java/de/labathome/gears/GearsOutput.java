@@ -7,10 +7,12 @@ import org.apache.commons.math3.fraction.Fraction;
 public class GearsOutput {
 
 	protected Fraction[] solution;
+	protected Fraction[] modules;
 	protected List<int[][]> teethCounts;
 
-	public GearsOutput(Fraction[] solution, List<int[][]> teethCounts) {
+	public GearsOutput(Fraction[] solution, Fraction[] modules, List<int[][]> teethCounts) {
 		this.solution = solution;
+		this.modules = modules;
 		this.teethCounts = teethCounts;
 	}
 
@@ -19,6 +21,8 @@ public class GearsOutput {
 		String json = "{";
 		if (solution != null) {
 			json += solutionToJson();
+			json += ",";
+			json += modulesToJson();
 			if (teethCounts != null) {
 				json += ",";
 				json += teethCountsToJson();
@@ -37,6 +41,25 @@ public class GearsOutput {
 			json += Integer.toString(solution[idxRatio].getNumerator()) + ",";
 			json += Integer.toString(solution[idxRatio].getDenominator());
 			if (idxRatio < solution.length-1) {
+				json += "],";
+			} else {
+				json += "]";
+			}
+		}
+
+		json += "]";
+
+		return json;
+	}
+
+	private String modulesToJson() {
+		String json = "\"modules\":[";
+
+		for (int idxRatio = 0; idxRatio < modules.length; ++idxRatio) {
+			json += "[";
+			json += Integer.toString(modules[idxRatio].getNumerator()) + ",";
+			json += Integer.toString(modules[idxRatio].getDenominator());
+			if (idxRatio < modules.length-1) {
 				json += "],";
 			} else {
 				json += "]";

@@ -21,17 +21,21 @@ class TestGears {
 				new Fraction(5, 2)
 		};
 
-		int maxTeethSum = 50;
 		int minTeethSum = 10;
+		int maxTeethSum = 50;
+		Fraction minModule = new Fraction(1, 1);
+		Fraction maxModule = new Fraction(1, 1);
 		List<int[][]> teethCounts = new LinkedList<>();
-		Fraction[] result = Gears.findToothcounts(transmissionRatios, maxTeethSum, minTeethSum, teethCounts);
+		Fraction[][] result = Gears.findToothcounts(transmissionRatios,
+				minTeethSum, maxTeethSum,
+				minModule, maxModule, teethCounts);
 
 		// check that a unique solution was found
-		Assertions.assertNotNull(result);
+		Assertions.assertNotNull(result[0]);
 
 		// check that the unique solution has the same ratios as the request
 		for (int idxRatio = 0; idxRatio < transmissionRatios.length; ++idxRatio) {
-			Assertions.assertEquals(0, transmissionRatios[idxRatio].compareTo(result[idxRatio]));
+			Assertions.assertEquals(0, transmissionRatios[idxRatio].compareTo(result[0][idxRatio]));
 		}
 
 		// check that the actual teeth counts are correct
@@ -54,17 +58,21 @@ class TestGears {
 				new Fraction(14, 10)
 		};
 
-		int maxTeethSum = 200;
 		int minTeethSum = 10;
+		int maxTeethSum = 200;
+		Fraction minModule = new Fraction(1, 1);
+		Fraction maxModule = new Fraction(1, 1);
 		List<int[][]> teethCounts = new LinkedList<>();
-		Fraction[] result = Gears.findToothcounts(transmissionRatios, maxTeethSum, minTeethSum, teethCounts);
+		Fraction[][] result = Gears.findToothcounts(transmissionRatios,
+				minTeethSum, maxTeethSum,
+				minModule, maxModule, teethCounts);
 
 		// check that a unique solution was found
-		Assertions.assertNotNull(result);
+		Assertions.assertNotNull(result[0]);
 
 		// check that the unique solution has the same ratios as the request
 		for (int idxRatio = 0; idxRatio < transmissionRatios.length; ++idxRatio) {
-			Assertions.assertEquals(0, transmissionRatios[idxRatio].compareTo(result[idxRatio]));
+			Assertions.assertEquals(0, transmissionRatios[idxRatio].compareTo(result[0][idxRatio]));
 		}
 
 		// check that the actual teeth counts are correct
@@ -87,13 +95,17 @@ class TestGears {
 				new Fraction(20, 10)
 		};
 
-		int maxTeethSum = 200;
 		int minTeethSum = 10;
+		int maxTeethSum = 200;
+		Fraction minModule = new Fraction(1, 1);
+		Fraction maxModule = new Fraction(1, 1);
 		List<int[][]> teethCounts = new LinkedList<>();
-		Fraction[] result = Gears.findToothcounts(transmissionRatios, maxTeethSum, minTeethSum, teethCounts);
+		Fraction[][] result = Gears.findToothcounts(transmissionRatios,
+				minTeethSum, maxTeethSum,
+				minModule, maxModule, teethCounts);
 
 		// check that actually no solution was found
-		Assertions.assertNull(result);
+		Assertions.assertNull(result[0]);
 
 		// check that the actually no teeth counts are found
 		Assertions.assertNotNull(teethCounts);
@@ -112,17 +124,21 @@ class TestGears {
 				new Fraction(18, 14)
 			};
 
-		int maxTeethSum = 100;
 		int minTeethSum = 10;
+		int maxTeethSum = 100;
+		Fraction minModule = new Fraction(1, 1);
+		Fraction maxModule = new Fraction(1, 1);
 		List<int[][]> teethCounts = new LinkedList<>();
-		Fraction[] result = Gears.findToothcounts(transmissionRatios, maxTeethSum, minTeethSum, teethCounts);
+		Fraction[][] result = Gears.findToothcounts(transmissionRatios,
+				minTeethSum, maxTeethSum,
+				minModule, maxModule, teethCounts);
 
 		// check that a unique solution was found
-		Assertions.assertNotNull(result);
+		Assertions.assertNotNull(result[0]);
 
 		// check that the unique solution has the same ratios as the request
 		for (int idxRatio = 0; idxRatio < transmissionRatios.length; ++idxRatio) {
-			Assertions.assertEquals(0, transmissionRatios[idxRatio].compareTo(result[idxRatio]));
+			Assertions.assertEquals(0, transmissionRatios[idxRatio].compareTo(result[0][idxRatio]));
 		}
 
 		// check that the actual teeth counts are correct
@@ -150,17 +166,21 @@ class TestGears {
 				new Fraction(20, 12)
 		};
 
-		int maxTeethSum = 100;
 		int minTeethSum = 10;
+		int maxTeethSum = 100;
+		Fraction minModule = new Fraction(1, 1);
+		Fraction maxModule = new Fraction(1, 1);
 		List<int[][]> teethCounts = new LinkedList<>();
-		Fraction[] result = Gears.findToothcounts(transmissionRatios, maxTeethSum, minTeethSum, teethCounts);
+		Fraction[][] result = Gears.findToothcounts(transmissionRatios,
+				minTeethSum, maxTeethSum,
+				minModule, maxModule, teethCounts);
 
 		// check that a unique solution was found
-		Assertions.assertNotNull(result);
+		Assertions.assertNotNull(result[0]);
 
 		// check that the unique solution has the same ratios as the request
 		for (int idxRatio = 0; idxRatio < transmissionRatios.length; ++idxRatio) {
-			Assertions.assertEquals(0, transmissionRatios[idxRatio].compareTo(result[idxRatio]));
+			Assertions.assertEquals(0, transmissionRatios[idxRatio].compareTo(result[0][idxRatio]));
 		}
 
 		// check that the actual teeth counts are correct
@@ -184,10 +204,10 @@ class TestGears {
 				new Fraction(20, 10)
 		};
 
-		Fraction[] result = Gears.findToothcounts(transmissionRatios);
+		Fraction[][] result = Gears.findToothcounts(transmissionRatios);
 
 		// check that actually no solution was found
-		Assertions.assertNull(result);
+		Assertions.assertNull(result[0]);
 	}
 
 	/**
@@ -202,14 +222,14 @@ class TestGears {
 				new Fraction(14, 10)
 		};
 
-		Fraction[] result = Gears.findToothcounts(transmissionRatios);
+		Fraction[][] result = Gears.findToothcounts(transmissionRatios);
 
 		// check that a unique solution was found
-		Assertions.assertNotNull(result);
+		Assertions.assertNotNull(result[0]);
 
 		// check that the unique solution has the same ratios as the request
 		for (int idxRatio = 0; idxRatio < transmissionRatios.length; ++idxRatio) {
-			Assertions.assertEquals(0, transmissionRatios[idxRatio].compareTo(result[idxRatio]));
+			Assertions.assertEquals(0, transmissionRatios[idxRatio].compareTo(result[0][idxRatio]));
 		}
 	}
 
